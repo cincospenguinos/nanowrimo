@@ -33,13 +33,17 @@ module Nanowrimo
 		# A hash of the wordcount history information
 		def self.get_wordcount_history(user)
 			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wchistory/#{user}"))
+			# byebug
 			data = symbolize_keys(nori.parse(xml)['wchistory'])
-			data[:wordcounts] = data[:wordcounts]['wcentry']
+			data[:wordcounts] = data[:wordcounts][:wcentry]
 			data[:wordcounts] = data[:wordcounts].map { |e| convert_vals(symbolize_keys(e)) }
 			convert_vals(data)
 		end
 
 		# Gets the wordcount for the whole site
+		#
+		# == Returns:
+		# A hash of the site's wordcount
 		def self.get_site_wordcount
 			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wcstatssummary"))
 			data = symbolize_keys(nori.parse(xml)['wcstatssummary'])
@@ -47,6 +51,9 @@ module Nanowrimo
 		end
 
 		# Get the wordcount history for the whole site
+		#
+		# == Returns:
+		# A hash of the site's wordcount history
 		def self.get_site_wordcount_history
 			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wcstats"))
 			data = symbolize_keys(nori.parse(xml)['wcstats'])
@@ -61,7 +68,7 @@ module Nanowrimo
 		# == Returns:
 		# A hash of the wordcount information
 		def self.get_regional_wordcount(region)
-			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wc/#{region}"))
+			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wcregion/#{region}"))
 			data = symbolize_keys(nori.parse(xml)['wcregion']) # TODO: What do if the region doesn't exist?
 			convert_vals(data)
 		end
@@ -74,8 +81,8 @@ module Nanowrimo
 		# == Returns:
 		# A hash of the wordcount history information
 		def self.get_regional_wordcount_history(region)
-			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wchistory/#{region}"))
-			data = symbolize_keys(nori.parse(xml)['wchistory'])
+			xml = Net::HTTP.get(URI("#{WORDCOUNTAPI_URL}/wcregion/#{region}"))
+			data = symbolize_keys(nori.parse(xml)['wcregion'])
 			data[:wordcounts] = data[:wordcounts]['wcentry']
 			data[:wordcounts] = data[:wordcounts].map { |e| convert_vals(symbolize_keys(e)) }
 			convert_vals(data)
@@ -91,9 +98,10 @@ module Nanowrimo
 		# true if successful
 		def self.update_wordcount(secret, username, wordcount)
 			hex = Digest::SHA1.hexdigest("#{secret}#{username}#{wordcount}")
-			req = Net::HTTP::Put.new("/wordcount/#{hex}", initheader = { hash: hex, name: username, wordcount: wordcount.to_s})
+			req = Net::HTTP::Put.new("/api/wordcount", initheader = { hash: hex, name: username, wordcount: wordcount.to_s})
 			response = Net::HTTP.new('nanowrimo.org', 80).start { |http| http.request(req) }
-			puts ">>> #{response}"
+			# puts ">>> #{response.inspect}"
+			response.code == 200.to_s
 		end
 
 		private
@@ -105,8 +113,23 @@ module Nanowrimo
     end
 
     def self.symbolize_keys(res)
-    	return if res.nil?
-    	res.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo }
+    	return if res.nil? || !res.is_a?(Hash)
+
+    	new_res = {}
+
+  		res.each do |k, v|
+  			if v.is_a?(Hash)
+  				new_res[k.to_sym] = symbolize_keys(v)
+  			elsif v.is_a?(Array)
+  				new_array = []
+  				v.each { |e| new_array << symbolize_keys(e) }
+  				new_res[k.to_sym] = new_array
+  			else
+  				new_res[k.to_sym] = v
+  			end
+  		end
+
+  		new_res
 		end
 
 		# Converts all the possible numeric values in the hash provided

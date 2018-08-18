@@ -7,11 +7,15 @@ class ApiTest < Minitest::Test
 		wordcount = Nanowrimo::API.get_wordcount('jezra')
 		assert(!wordcount.nil?, 'get_wordcount() returned nil.')
 		assert_equal(wordcount[:user_wordcount], 5907)
+
+		# No user of this username should exist
+		wordcount = Nanowrimo::API.get_wordcount('0000011111222223345897894dasjgoidashgoqyueworqyuiqhuieqoighoashuidgbzuibnoqieogueyho')
+		assert(wordcount[:error] == "user does not exist")
 	end
 
 	def test_get_wordcount_history
 		history = Nanowrimo::API.get_wordcount_history('jezra')
-		assert_equal(history[:user_wordcount], 5907)
+		assert_equal(5907, history[:user_wordcount])
 	end
 
 	def test_get_site_wordcount

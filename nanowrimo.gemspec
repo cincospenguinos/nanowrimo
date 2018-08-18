@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["andre.lafleur@utah.edu"]
 
   spec.summary       = %q{API wrapper of NaNoWriMo's API}
-  spec.description   = %q{}
+  spec.description   = %q{Allows exploring user, region and site statistics as well as updating a user's wordcount.}
   spec.homepage      = "http://www.github.com/cincospenguinos/nanowrimo"
   spec.license       = "MIT"
 

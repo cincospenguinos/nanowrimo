@@ -20,7 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can use this to interact with Nanowrimo's API, through the Nanowrimo object:
+
+```ruby
+nano = Nanowrimo.new
+summary = nano.site_summary
+```
+
+If you provide a username and secret key, you can update your wordcount:
+```ruby
+nano = Nanowrimo.new(username, secret)
+nano.set_wordcount(50001)
+```
+
+You can do all of this in a block if you don't feel like having an object floating around:
+```ruby
+Nanowrimo.new(username, secret) do |nano|
+  friend_wc = nano.summary('some_friend_i_have')[:user_wordcount]
+  nano.set_wordcount(friend_wc)
+end
+```
 
 ## Development
 
@@ -36,3 +55,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[cinco
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+curl -X PUT -d   http://nanowrimo.org/api/wordcount
