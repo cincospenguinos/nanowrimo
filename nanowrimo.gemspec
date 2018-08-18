@@ -31,6 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.5.0"
   spec.add_development_dependency "nori", "~> 2.6.0"
   spec.add_development_dependency "nokogiri", "~> 1.8.4"
-
-  spec.add_runtime_dependency "thor", "~> 0.20.0"
+  spec.add_development_dependency "minitest", "~> 5.8.4"
 end
