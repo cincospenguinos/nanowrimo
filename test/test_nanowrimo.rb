@@ -1,6 +1,7 @@
 # test_nanowrimo.rb
 require 'minitest/autorun'
 require 'nanowrimo'
+require 'test_helper'
 
 class NanowrimoTest < Minitest::Test
 

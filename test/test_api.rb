@@ -1,6 +1,7 @@
 # test_api.rb
 require 'minitest/autorun'
 require 'nanowrimo'
+require 'test_helper'
 
 class ApiTest < Minitest::Test
 	def test_get_wordcount

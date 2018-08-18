@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/cincospenguinos/nanowrimo.svg?branch=master)](https://travis-ci.com/cincospenguinos/nanowrimo)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b8039b84a8ead0cf1ce6/maintainability)](https://codeclimate.com/github/cincospenguinos/nanowrimo/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/b8039b84a8ead0cf1ce6/test_coverage)](https://codeclimate.com/github/cincospenguinos/nanowrimo/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/cincospenguinos/nanowrimo/badge.svg?branch=master)](https://coveralls.io/github/cincospenguinos/nanowrimo?branch=master)
 
 Simple wrapper for NaNoWriMo's [wordcount API](https://nanowrimo.org/wordcount_api) and [writer API](https://nanowrimo.org/api/wordcount).
 
@@ -53,11 +53,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[cincospenguinos]/nanowrimo. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on [GitHub](https://github.com/cincospenguinos/nanowrimo). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-curl -X PUT -d   http://nanowrimo.org/api/wordcount
