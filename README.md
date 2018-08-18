@@ -1,5 +1,9 @@
 # nanowrimo
 
+[![Build Status](https://travis-ci.com/cincospenguinos/nanowrimo.svg?branch=master)](https://travis-ci.com/cincospenguinos/nanowrimo)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b8039b84a8ead0cf1ce6/maintainability)](https://codeclimate.com/github/cincospenguinos/nanowrimo/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b8039b84a8ead0cf1ce6/test_coverage)](https://codeclimate.com/github/cincospenguinos/nanowrimo/test_coverage)
+
 Simple wrapper for NaNoWriMo's [wordcount API](https://nanowrimo.org/wordcount_api) and [writer API](https://nanowrimo.org/api/wordcount).
 
 ## Installation
